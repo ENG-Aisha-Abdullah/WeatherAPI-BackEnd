@@ -8,7 +8,7 @@
     "source": "HTTPie Desktop 2025.2.0"
   },
   "entry": {
-    "name": "WeatherHub API",
+    "name": "Weather API Testing",
     "icon": {
       "name": "default",
       "color": "gray"
@@ -18,8 +18,8 @@
     },
     "requests": [
       {
-        "name": "Auth / Signup",
-        "url": "http://localhost:3000/api/auth/signup",
+        "name": "Sign Up",
+        "url": "http://localhost:3000/auth/signup",
         "method": "POST",
         "headers": [
           {
@@ -39,7 +39,7 @@
             "name": ""
           },
           "text": {
-            "value": "{\n  \"email\": \"Aishae@example.com\",\n  \"passwordHash\": \"StrongP@ss123\"\n}",
+            "value": "{\n\"email\":\"testt@example.com\"\n,\"password\":\"Test1234\"\n}",
             "format": "text/plain"
           },
           "form": {
@@ -53,8 +53,8 @@
         }
       },
       {
-        "name": "Auth / Signin",
-        "url": "http://localhost:3000/api/auth/signin",
+        "name": "Signin",
+        "url": "http://localhost:3000/auth/signin",
         "method": "POST",
         "headers": [
           {
@@ -74,7 +74,7 @@
             "name": ""
           },
           "text": {
-            "value": "{\n  \"email\": \"Aishae@example.com\",\n  \"passwordHash\": \"StrongP@ss123\"\n}",
+            "value": "{\n  \"email\": \"aa@example.com\",\n  \"passwordHash\": \"test@test123\"\n}",
             "format": "text/plain"
           },
           "form": {
@@ -88,8 +88,8 @@
         }
       },
       {
-        "name": "Auth / Signout",
-        "url": "http://localhost:3000/api/auth/signout",
+        "name": "Signout",
+        "url": "http://localhost:3000/auth/signout",
         "method": "POST",
         "headers": [
           {
@@ -104,7 +104,7 @@
           "type": "bearer",
           "credentials": {
             "username": "",
-            "password": "47730c76a2e142aa97e92cc52c840735f836eefd32ac09e4c5fdcbfa6023a08615cb60de03a14887faca9acdc39b0e9373621d1713d238a72b9f37d69f9eb9c5"
+            "password": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwidXNlciI6eyJpZCI6IjY4NThiZDI1YzYzMzliNjM3NGY5MTIxYyIsImVtYWlsIjoiYWFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImNyZWF0ZWRBdCI6IjIwMjUtMDYtMjNUMDI6MzQ6MTMuNjQ5WiJ9LCJpYXQiOjE3NTA2NDYwNjgsImV4cCI6MTc1MDY0Njk2OH0.4YzObCoZslDkDxO-Rhoz27MCst2m5ZU5xsb9VhtVMP0"
           },
           "target": "headers"
         },
@@ -128,25 +128,64 @@
         }
       },
       {
-        "name": "Weather / Get Weather (cache miss then hit)",
-        "url": "http://localhost:3000/api/weather?lat=24.7136&lon=46.6753",
+        "name": "Get Weather",
+        "url": "https://api.openweathermap.org/data/2.5/weather?lat=24.71&lon=46.68&units=metric&appid=6d2002e4d7759fc039323f3af05f9de5",
         "method": "GET",
-        "headers": [
-          {
-            "name": "Authorization",
-            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwidXNlciI6eyJpZCI6IjY4NTc4MDMzNmViMjQxNzc4YzY3M2RhNSIsImVtYWlsIjoiQWlzaGFlQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJjcmVhdGVkQXQiOiIyMDI1LTA2LTIyVDA0OjAxOjU1LjA1OVoifSwiaWF0IjoxNzUwNTY0OTI2LCJleHAiOjE3NTA1NjU4MjZ9.83j9aN4RaKWdS5ut_aDPAEhtWOcc2AVd2bRPGnqDMsA Bearer",
-            "enabled": true
-          }
-        ],
+        "headers": [],
         "queryParams": [
           {
             "name": "lat",
-            "value": "24.7136",
+            "value": "24.71",
+            "enabled": true
+          },
+          {
+            "name": "lon",
+            "value": "46.68",
+            "enabled": true
+          }
+        ],
+        "pathParams": [],
+        "auth": {
+          "type": "bearer",
+          "credentials": {
+            "username": "",
+            "password": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwidXNlciI6eyJpZCI6IjY4NThiZDI1YzYzMzliNjM3NGY5MTIxYyIsImVtYWlsIjoiYWFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImNyZWF0ZWRBdCI6IjIwMjUtMDYtMjNUMDI6MzQ6MTMuNjQ5WiJ9LCJpYXQiOjE3NTA2NDYwNTMsImV4cCI6MTc1MDY0Njk1M30.eN7cU6zNTQ4oawNjEOdcM26QICI_hR1xRF5XoVKHhGg"
+          },
+          "target": "headers"
+        },
+        "body": {
+          "type": "none",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "Get Weather — localy",
+        "url": "http://localhost:3000/weather?lat=24.71&lon=46.68",
+        "method": "GET",
+        "headers": [],
+        "queryParams": [
+          {
+            "name": "lat",
+            "value": "24.71",
             "enabled": false
           },
           {
             "name": "lon",
-            "value": "46.6753",
+            "value": "46.68",
             "enabled": false
           }
         ],
@@ -155,7 +194,7 @@
           "type": "bearer",
           "credentials": {
             "username": "",
-            "password": "47730c76a2e142aa97e92cc52c840735f836eefd32ac09e4c5fdcbfa6023a08615cb60de03a14887faca9acdc39b0e9373621d1713d238a72b9f37d69f9eb9c5"
+            "password": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwidXNlciI6eyJpZCI6IjY4NThiZDI1YzYzMzliNjM3NGY5MTIxYyIsImVtYWlsIjoiYWFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImNyZWF0ZWRBdCI6IjIwMjUtMDYtMjNUMDI6MzQ6MTMuNjQ5WiJ9LCJpYXQiOjE3NTA2NDYwNTMsImV4cCI6MTc1MDY0Njk1M30.eN7cU6zNTQ4oawNjEOdcM26QICI_hR1xRF5XoVKHhGg"
           },
           "target": "headers"
         },
@@ -179,73 +218,17 @@
         }
       },
       {
-        "name": "History / List History",
-        "url": "http://localhost:3000/api/auth/history",
+        "name": "Get History",
+        "url": "http://localhost:3000/history",
         "method": "GET",
         "headers": [],
-        "queryParams": [
-          {
-            "name": "limit",
-            "value": "10",
-            "enabled": true
-          },
-          {
-            "name": "skip",
-            "value": "0",
-            "enabled": true
-          },
-          {
-            "name": "sort",
-            "value": "-requestedAt",
-            "enabled": true
-          }
-        ],
+        "queryParams": [],
         "pathParams": [],
         "auth": {
           "type": "bearer",
           "credentials": {
             "username": "",
-            "password": "47730c76a2e142aa97e92cc52c840735f836eefd32ac09e4c5fdcbfa6023a08615cb60de03a14887faca9acdc39b0e9373621d1713d238a72b9f37d69f9eb9c5"
-          },
-          "target": "headers"
-        },
-        "body": {
-          "type": "none",
-          "file": {
-            "name": ""
-          },
-          "text": {
-            "value": "",
-            "format": "application/json"
-          },
-          "form": {
-            "isMultipart": false,
-            "fields": []
-          },
-          "graphql": {
-            "query": "",
-            "variables": ""
-          }
-        }
-      },
-      {
-        "name": "History / Count History",
-        "url": "http://localhost:3000/api/auth/history",
-        "method": "GET",
-        "headers": [],
-        "queryParams": [
-          {
-            "name": "count",
-            "value": "true",
-            "enabled": true
-          }
-        ],
-        "pathParams": [],
-        "auth": {
-          "type": "bearer",
-          "credentials": {
-            "username": "",
-            "password": "47730c76a2e142aa97e92cc52c840735f836eefd32ac09e4c5fdcbfa6023a08615cb60de03a14887faca9acdc39b0e9373621d1713d238a72b9f37d69f9eb9c5"
+            "password": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwidXNlciI6eyJpZCI6IjY4NThiZDI1YzYzMzliNjM3NGY5MTIxYyIsImVtYWlsIjoiYWFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImNyZWF0ZWRBdCI6IjIwMjUtMDYtMjNUMDI6MzQ6MTMuNjQ5WiJ9LCJpYXQiOjE3NTA2NDYwNTMsImV4cCI6MTc1MDY0Njk1M30.eN7cU6zNTQ4oawNjEOdcM26QICI_hR1xRF5XoVKHhGg"
           },
           "target": "headers"
         },

@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 import logger from './utils/logger';
 import { dev, port } from './utils/helpers';
 import authRoutes from "./routes/auth.routes"
-
 import { OK, INTERNAL_SERVER_ERROR } from './utils/http-status';
 import { connectDB } from './config/dataBase';
 import { Router } from 'express';
@@ -42,9 +41,9 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/weather', weatherRoutes);
-app.use('/api/history', historyRoutes);
+app.use('/auth', authRoutes);
+app.use('/weather', weatherRoutes);
+app.use('/history', historyRoutes);
 
 
 

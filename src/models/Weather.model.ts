@@ -1,4 +1,3 @@
-// Weather – cached current conditions
 import mongoose, { Document, Schema, Types } from 'mongoose';
 export interface WeatherDocument extends Document {
     lat: Number,                 // rounded(2)
@@ -23,10 +22,8 @@ const WeatherSchema = new Schema<WeatherDocument>(
         },
         fetchedAt: {
             type: Date,
-            required: true,
+            default: Date.now,
             index: { expires: '1h' } // TTL-indexed >> Time-To-Live index  >>>
-            // (index) هو نوع خاص من الفهارس 
-            // تلقائيًا بعد وقت معين (documents) يتم استخدامه لحذف الوثائق 
         }
     }
 );

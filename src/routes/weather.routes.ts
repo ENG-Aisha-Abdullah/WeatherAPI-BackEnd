@@ -8,3 +8,5 @@ const router = Router();
 router.get('/', authorized, getWeather);
 
 export default router;
+
+
