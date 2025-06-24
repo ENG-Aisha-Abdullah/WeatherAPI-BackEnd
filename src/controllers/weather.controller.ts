@@ -1,83 +1,41 @@
-import axios from 'axios';
 import { Response, NextFunction } from 'express';
-import WeatherCollection from '../models/Weather.model';
-import HistoryCollection from '../models/History.model';
+import { fetchOrGetCachedWeather } from '../services/weather.service';
 import { OK, BAD_REQUEST } from '../utils/http-status';
 import { AuthRequest } from '../middleware/auth.middleware';
 
 export const getWeather = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const lat = parseFloat(req.query.lat as string);
-        const lon = parseFloat(req.query.lon as string);
-        const userId = req.user._id;
+  try {
+    const lat = parseFloat(req.query.lat as string);
+    const lon = parseFloat(req.query.lon as string);
 
-        if (isNaN(lat)) {
-            res.status(BAD_REQUEST).json({ message: 'lat is required' });
-            return;
-        }
+    if (isNaN(lat)) {
+      res.status(BAD_REQUEST).json({ message: 'lat is required' });
+      return;
+    }
 
-        if (isNaN(lon)) {
-            res.status(BAD_REQUEST).json({ message: 'lon is required' });
-            return;
-        }
+    if (isNaN(lon)) {
+      res.status(BAD_REQUEST).json({ message: 'lon is required' });
+      return;
+    }
 
-        const now = new Date();
+    const result = await fetchOrGetCachedWeather(lat, lon, req.user._id);
 
-        const findLat = parseFloat(lat.toFixed(2));
-        const finfLot = parseFloat(lon.toFixed(2));
+    res.status(OK).json({
+      source: result.source,
+      coordinates: {
+        lat: lat.toFixed(2),
+        lon: lon.toFixed(2)
+      },
+      tempC: result.data.main.temp,
+      humidity: result.data.main.humidity,
+      description: result.data.weather[0].description,
+      fetchedAt: result.fetchedAt,
+    });
 
-        let weather = await WeatherCollection.findOne({ lat: findLat, lon: finfLot });
-        let source: 'cache' | 'openweather';
-        let weatherData: any;
-
-        if (weather) {
-            source = 'cache';
-            weatherData = weather.data;
-        } else {
-            const apiKey = process.env.WEATHER_API_KEY;
-            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
-            const response = await axios.get(url);
-
-            weatherData = response.data;
-            source = 'openweather';
-
-            weather = await WeatherCollection.create({
-                lat: findLat,
-                lon: finfLot,
-                data: {
-                    ...weatherData,
-                    source: "openweather"
-                },
-                fetchedAt: now,
-            });
-        }
-
-        await HistoryCollection.create({
-            user: userId,
-            weather: weather._id,
-            lat: lat,
-            lon: lon,
-            requestedAt: now,
-            data: {
-                source,
-                city: weatherData?.name,
-                tempC: weatherData.main.temp,
-                description: weatherData.weather[0].description,
-            },
-        });
-
-        res.status(OK).json({
-            source,
-            coordinates: { lat: lat.toFixed(2), lon: lon.toFixed(2), },
-            tempC: weatherData.main.temp,
-            humidity: weatherData.main.humidity,
-            description: weatherData.weather[0].description,
-            fetchedAt: weather.fetchedAt,
-        });
-    } catch (error: any) {
+  } catch (error: any) {
     res.status(BAD_REQUEST).json({
       success: false,
-      message:'Error in getWeather',
+      message: 'Error in getWeather',
     });
-    }
+  }
 };
